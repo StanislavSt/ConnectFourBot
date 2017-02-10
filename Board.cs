@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Linq;
 
 namespace FourInARow
 {
@@ -34,7 +35,36 @@ namespace FourInARow
             return true;
         }
 
-        private int RowsNumber()
+        //Check if there is a winner , after the performed move
+        public bool getWinner_Me(int row, int col)
+        {
+            
+            Board tempBoard = new Board();
+            tempBoard = this;
+            tempBoard._boardArray[row][col] = 1;
+
+            for(int i = 0; i < ColsNumber(); i++)
+                for(int j = 0 ; j < RowsNumber(); j++)
+                {
+                    // Check for rows
+                    if( tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j,i+1) == FieldState.Me && tempBoard.State(j,i+2) == FieldState.Me && tempBoard.State(j,i+3) == FieldState.Me)
+                        return true;
+
+                    //Check for Column
+                    else if (tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j+1,i) == FieldState.Me && tempBoard.State(j+2,i) == FieldState.Me && tempBoard.State(j+3,i) == FieldState.Me)
+                        return true;
+                }
+            for(int i = 0; i < ColsNumber(); i++)
+                for(int j = 0 ; j < RowsNumber(); j++)
+                    for(int d = -1 ; d<=1; d+=2)
+                    {
+                        if(tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j+1,i+1*d) == FieldState.Me && tempBoard.State(j+2,i+2*d) == FieldState.Me && tempBoard.State(j+3,i+3*d) == FieldState.Me)
+                        return true;
+                    }
+            return false;
+        }
+
+        public int RowsNumber()
         {
             return _boardArray.Length;
         }
