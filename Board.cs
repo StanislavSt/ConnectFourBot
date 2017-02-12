@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace FourInARow
 {
+    /// <summary>
+    /// A game board
+    /// </summary>
     public class Board
     {
         private int[][] _boardArray;
@@ -35,33 +38,53 @@ namespace FourInARow
             return true;
         }
 
-        //Check if there is a winner , after the performed move
-        public bool getWinner_Me(int row, int col)
+        //Check if there if I'm the winner on the board
+        public bool getWinner()
         {
-            
-            Board tempBoard = new Board();
-            tempBoard = this;
-            tempBoard._boardArray[row][col] = 1;
-
-            for(int i = 0; i < ColsNumber(); i++)
-                for(int j = 0 ; j < RowsNumber(); j++)
+            for(int i = 0; i < this.ColsNumber() ; i++)
+                for(int j = 0 ; j < this.RowsNumber() ; j++)
                 {
-                    // Check for rows
-                    if( tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j,i+1) == FieldState.Me && tempBoard.State(j,i+2) == FieldState.Me && tempBoard.State(j,i+3) == FieldState.Me)
-                        return true;
-
-                    //Check for Column
-                    else if (tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j+1,i) == FieldState.Me && tempBoard.State(j+2,i) == FieldState.Me && tempBoard.State(j+3,i) == FieldState.Me)
-                        return true;
-                }
-            for(int i = 0; i < ColsNumber(); i++)
-                for(int j = 0 ; j < RowsNumber(); j++)
-                    for(int d = -1 ; d<=1; d+=2)
+                    try
                     {
-                        if(tempBoard.State(j,i)==FieldState.Me && tempBoard.State(j+1,i+1*d) == FieldState.Me && tempBoard.State(j+2,i+2*d) == FieldState.Me && tempBoard.State(j+3,i+3*d) == FieldState.Me)
+                        // Horizontal win
+                        if(i < 4)
+                            if (this.State(j, i) == FieldState.Me
+                                && this.State(j, i + 1) == FieldState.Me
+                                && this.State(j, i + 2) == FieldState.Me
+                                && this.State(j, i + 3) == FieldState.Me)
+                                return true;
+                        //Vertical win 
+                        if(j < 3)
+                           if (this.State(j,i)==FieldState.Me 
+                                && this.State(j,i+1) == FieldState.Me 
+                                && this.State(j,i+2) == FieldState.Me 
+                                && this.State(j,i+3) == FieldState.Me)
                         return true;
                     }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+            //Check the diagonals
+            for (int j = 0; j < 2; j++)
+                for(int i = 0 ; i <3 ; i++)
+                    if (this.State(j, i) == FieldState.Me
+                                && this.State(j+1, i + 1) == FieldState.Me
+                                && this.State(j+2, i + 2) == FieldState.Me
+                                && this.State(j+3, i + 3) == FieldState.Me)
+                        return true;
+            for (int j = 3; j < 5; j++)
+                for(int i = 0 ; i <3 ; i++)
+                    if (this.State(j, i) == FieldState.Me
+                                && this.State(j - 1, i + 1) == FieldState.Me
+                                && this.State(j - 2, i + 2) == FieldState.Me
+                                && this.State(j - 3, i + 3) == FieldState.Me)
+                        return true;
+
+
             return false;
+
         }
 
         public int RowsNumber()
@@ -69,7 +92,7 @@ namespace FourInARow
             return _boardArray.Length;
         }
 
-        public FieldState State(int col, int row)
+        public FieldState State(int row, int col)
         {
             if (_boardArray[row][col] == 0) return FieldState.Free;
             if (_boardArray[row][col] == _mybotId) return FieldState.Me;

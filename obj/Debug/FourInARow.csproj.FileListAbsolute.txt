@@ -1,1 +1,7 @@
 C:\Users\Stanislav\Desktop\Four\bin\Debug\FourInARow.exe.config
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\bin\Debug\FourInARow.exe.config
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\bin\Debug\FourInARow.exe
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\bin\Debug\FourInARow.pdb
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\obj\Debug\FourInARow.csprojResolveAssemblyReference.cache
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\obj\Debug\FourInARow.exe
+C:\Users\Stanislav\Desktop\Four\ConnectFourBot\obj\Debug\FourInARow.pdb

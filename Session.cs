@@ -40,7 +40,11 @@ namespace FourInARow
                                 switch (parts[2])
                                 {
                                     case "field":
-                                        var boardArray = parts[3].Split(';').Select(x => x.Split(',').Select(int.Parse).ToArray()).ToArray();
+                                        var boardArray = 
+                                            parts[3].Split(';')
+                                            .Select(x => x.Split(',').
+                                                Select(int.Parse).ToArray())
+                                                .ToArray();
                                         board.Update(boardArray);
                                     break;
                                 }
