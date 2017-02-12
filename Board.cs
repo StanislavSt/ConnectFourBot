@@ -41,11 +41,10 @@ namespace FourInARow
         //Check if there if I'm the winner on the board
         public bool getWinner()
         {
+            //Check for horizontal and vertical winner
             for(int i = 0; i < this.ColsNumber() ; i++)
                 for(int j = 0 ; j < this.RowsNumber() ; j++)
                 {
-                    try
-                    {
                         // Horizontal win
                         if(i < 4)
                             if (this.State(j, i) == FieldState.Me
@@ -60,11 +59,6 @@ namespace FourInARow
                                 && this.State(j,i+2) == FieldState.Me 
                                 && this.State(j,i+3) == FieldState.Me)
                         return true;
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
                 }
             //Check the diagonals
             for (int j = 0; j < 2; j++)
@@ -81,10 +75,8 @@ namespace FourInARow
                                 && this.State(j - 2, i + 2) == FieldState.Me
                                 && this.State(j - 3, i + 3) == FieldState.Me)
                         return true;
-
-
+           //If no winner found
             return false;
-
         }
 
         public int RowsNumber()
