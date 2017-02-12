@@ -1,6 +1,6 @@
 using System;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace FourInARow
 {
@@ -32,7 +32,7 @@ namespace FourInARow
             for(int i = 0;i < ColsNumber(); i ++)
             {
                 for(int j = 0; j < RowsNumber(); j ++)
-                if(State(i,j) != FieldState.Free)
+                if(State(j,i) != FieldState.Free)
                     return false;
             }
             return true;
@@ -41,40 +41,65 @@ namespace FourInARow
         //Check if there if I'm the winner on the board
         public bool getWinner()
         {
+             FieldState tempState =  new FieldState();
             //Check for horizontal and vertical winner
             for(int i = 0; i < this.ColsNumber() ; i++)
                 for(int j = 0 ; j < this.RowsNumber() ; j++)
                 {
                         // Horizontal win
-                        if(i < 4)
-                            if (this.State(j, i) == FieldState.Me
-                                && this.State(j, i + 1) == FieldState.Me
-                                && this.State(j, i + 2) == FieldState.Me
-                                && this.State(j, i + 3) == FieldState.Me)
+                    if (i < 4)
+                    {
+                        if (this.State(j, i) != FieldState.Free)
+                        {
+                            tempState = this.State(j, i);
+                            if (this.State(j, i + 1) == tempState
+                                    && this.State(j, i + 2) == tempState
+                                    && this.State(j, i + 3) == tempState)
                                 return true;
-                        //Vertical win 
-                        if(j < 3)
-                           if (this.State(j,i)==FieldState.Me 
-                                && this.State(j,i+1) == FieldState.Me 
-                                && this.State(j,i+2) == FieldState.Me 
-                                && this.State(j,i+3) == FieldState.Me)
-                        return true;
+                        }
+                            
+                    }
+
+                    //Vertical win 
+                    if (j < 3)
+                    {
+                        if (this.State(j, i) != FieldState.Free)
+                        {
+                            tempState = this.State(j, i);
+                            if (this.State(j + 1, i) == tempState
+                                    && this.State(j + 2, i) == tempState
+                                    && this.State(j + 3, i) == tempState)
+                                return true;
+                        }
+                            
+                    }
+                        
                 }
             //Check the diagonals
-            for (int j = 0; j < 2; j++)
-                for(int i = 0 ; i <3 ; i++)
-                    if (this.State(j, i) == FieldState.Me
-                                && this.State(j+1, i + 1) == FieldState.Me
-                                && this.State(j+2, i + 2) == FieldState.Me
-                                && this.State(j+3, i + 3) == FieldState.Me)
-                        return true;
-            for (int j = 3; j < 5; j++)
-                for(int i = 0 ; i <3 ; i++)
-                    if (this.State(j, i) == FieldState.Me
-                                && this.State(j - 1, i + 1) == FieldState.Me
-                                && this.State(j - 2, i + 2) == FieldState.Me
-                                && this.State(j - 3, i + 3) == FieldState.Me)
-                        return true;
+            for (int j = 0; j < 3; j++)
+                for (int i = 0; i < 4; i++)
+                {
+                    if (this.State(j, i) != FieldState.Free)
+                    {
+                        tempState = this.State(j, i);
+                        if (this.State(j + 1, i + 1) == tempState
+                                    && this.State(j + 2, i + 2) == tempState
+                                    && this.State(j + 3, i + 3) == tempState)
+                            return true;
+                    }
+                }
+            for (int j = 3; j < 6; j++)
+                for (int i = 0; i < 4; i++)
+                {
+                    if (this.State(j, i) != FieldState.Free)
+                    {
+                        tempState = this.State(j, i);
+                        if (this.State(j - 1, i + 1) == tempState
+                                    && this.State(j - 2, i + 2) == tempState
+                                    && this.State(j - 3, i + 3) == tempState)
+                            return true;
+                    }
+                }
            //If no winner found
             return false;
         }
