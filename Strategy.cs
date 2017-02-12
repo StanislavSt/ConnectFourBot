@@ -13,16 +13,17 @@ namespace FourInARow
         public int NextMove(Board board)
         {
             //TODO: write your code to choose best move on current board
-            
             Random r = new Random();
-
-            
             var col = r.Next(board.ColsNumber());
+
+            //Always start with the 4th column if you are first
             if(board.boardIsEmpty())
             {
                 col = 3;
                 return col ;
             }
+
+            //Testing
             if (board.getWinner())
             {
                 col = 1;
