@@ -161,9 +161,9 @@ namespace FourInARow
             if (_boardArray[row][col] == _mybotId) return FieldState.Me;
             return FieldState.Opponent;
         }
-
-        //To Do
-        //
+        /// <summary>
+        /// Drop a coin in the desired column, returns true if successful
+        /// </summary>
         public bool DoMove(int playerId, int column)
         {
             int row = 0;
@@ -172,16 +172,24 @@ namespace FourInARow
                 row++;
             }
 
-            if (row == 0)
+            if (row == this.RowsNumber())
                 return false;
-            _boardArray[row - 1][column] = playerId;
+            _boardArray[row][column] = playerId;
             return true;
         }
 
         public bool UndoMove(int column)
         {
-            //to do 
+            int row = 0;
+            while (row < this.RowsNumber() &&  State(row,column) != FieldState.Free)
+            {
+                row++;
+            }
+            if (row == this.RowsNumber())
+                return false;
+            _boardArray[row][column] = 0;
             return true;
+
         }
         public override string ToString()
         {
